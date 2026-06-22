@@ -1,0 +1,12 @@
+{
+  "name": "@forge/cli",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@forge/core": "*",
+    "@forge/genre-wave-survival": "*",
+    "@forge/adapter-web-canvas": "*"
+  }
+}
