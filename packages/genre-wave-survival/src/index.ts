@@ -1,4 +1,5 @@
-import type { GenrePack, FailureTaxonomy, ValidationFinding } from '@forge/core';
+import type { GenrePack, FailureTaxonomy, ValidationFinding, Planner } from '@forge/core';
+import { createModelPlanner } from '@forge/core';
 import type { WaveSurvivalSpec, WaveSurvivalBlueprint } from './blueprint';
 import { SCHEMA_VERSION } from './blueprint';
 import { validators } from './validators';
@@ -46,6 +47,14 @@ export const waveSurvivalPack: GenrePack<WaveSurvivalSpec> = {
   regression,
   planning,
 };
+
+/**
+ * The model-backed Planner for this genre — the generic core planner specialised only by a title
+ * deriver. Inject a ModelRouter (e.g. OpenRouter/BYOM) at call time; offline tests use mockProvider.
+ */
+export const waveSurvivalPlanner: Planner<WaveSurvivalSpec> = createModelPlanner<WaveSurvivalSpec>({
+  deriveTitle: (prompt, spec) => spec?.theme?.name ?? (prompt.slice(0, 40) || 'Wave Survival'),
+});
 
 export * from './blueprint';
 export { validators, estimateTimeToDeathSec } from './validators';
