@@ -13,7 +13,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "node --import tsx --test \"packages/**/test/**/*.test.ts\"",
-    "demo": "tsx packages/cli/src/index.ts"
+    "demo": "tsx packages/cli/src/index.ts",
+    "prepare": "git config core.hooksPath .githooks || true"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
