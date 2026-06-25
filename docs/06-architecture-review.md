@@ -68,7 +68,7 @@ demonstrably needs. **No fluff found.**
 | Typed boundaries          | ✅           | `strict: true`, generics carry `TSpec` end-to-end                            |
 | Deterministic-first       | ✅           | Validators run before any model (free Judge floor)                           |
 | Observability seam        | ✅           | `Tracer`/`Span` (timing) + `EventSink`/`AgentEvent` (analytics, JSONL); swap for OTel/DB later |
-| Error handling            | 🟡           | Loop is bounded + fails closed; no typed error taxonomy for infra errors yet |
+| Error handling            | ✅           | Typed `AgentError` (infra) separate from `ValidationFinding` (content); loop fails closed + emits `error.raised` |
 | Tests                     | ✅           | 14 tests (validators, templates, repair, adapter, inner-loop happy/repair/fail-closed) |
 | Lint / format / CI        | ✅           | ESLint flat config + Prettier + GitHub Actions (typecheck→lint→test)         |
 
@@ -90,11 +90,12 @@ demonstrably needs. **No fluff found.**
    as such; replace with a real headless sim when the runtime exists. _Medium._
 4. **Generics rely on method bivariance** where adapter (`TargetAdapter<unknown>`) is passed as
    `TargetAdapter<Spec>` (one cast in `cli`/tests). Acceptable; documented. _Low._
-5. **Stub coverage is load-bearing.** Runtime, Planner, MCP transport are still stubs. _Repairer is now
-   real at the client-deterministic tier_ (LLM repairer is the later layer). The demo proves _wiring_;
-   don't mistake green for a working agent on the model-dependent paths. _Tracking._
-6. **No error taxonomy for infra** (model timeouts, adapter failures) vs. content findings. Add a
-   typed `AgentError` channel separate from `ValidationFinding`. _Medium._
+5. **Stub coverage** is now small: **runtime is real** (headless boot test), **Planner is real**
+   (`createModelPlanner` + OpenRouter/BYOM, mock-tested), **repairer real**. Remaining stubs: MCP
+   transport, on-device provider, editor-web. _Note:_ `openRouterProvider` is unit-tested via injected
+   fetch but **not yet validated against the live API** (no key in CI). _Tracking._
+6. ~~No error taxonomy for infra.~~ **DONE.** Typed `AgentError` (code/stage/retryable), separate from
+   `ValidationFinding`; loop fails closed + emits `error.raised`. Tested.
 7. **Telemetry seam shipped** ([docs/07](07-telemetry-and-integration.md)): `EventSink` + JSONL, runId
    on every event. _Remaining:_ token/$/latency fields populate when the **server tier** is wired
    (`plan.completed` already has the `modelId`/`tokens`/`costUsd` slots). _Medium._

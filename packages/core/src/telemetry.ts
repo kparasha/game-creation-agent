@@ -59,6 +59,13 @@ export interface RunFinishedEvent extends AgentEventBase {
   repairs: number;
   latencyMs: number;
 }
+export interface ErrorRaisedEvent extends AgentEventBase {
+  type: 'error.raised';
+  stage: string;
+  code: string;
+  message: string;
+  retryable: boolean;
+}
 
 export type AgentEvent =
   | GenerationRequestedEvent
@@ -66,7 +73,8 @@ export type AgentEvent =
   | JudgeCompletedEvent
   | RepairAppliedEvent
   | PublishedEvent
-  | RunFinishedEvent;
+  | RunFinishedEvent
+  | ErrorRaisedEvent;
 
 /** Where events go. Implementations: nullSink, memorySink (here); jsonlSink (CLI); HTTP (later). */
 export interface EventSink {
