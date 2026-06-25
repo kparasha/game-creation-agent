@@ -55,9 +55,9 @@ npm run typecheck
 npm run demo -- "a cozy garden survival game"   # writes out/index.html (runtime is a stub)
 ```
 
-## Status: scaffold (pre-coding)
+## Status
 
-### Built (web path)
+### Built
 
 - `adapter-web-canvas`: **real generic canvas runtime** — a playable wave-survival loop driven entirely
   by the embedded Blueprint (`window.__SPEC__`): movement (WASD/pointer/touch), auto-fire, wave spawn +
@@ -70,9 +70,14 @@ npm run demo -- "a cozy garden survival game"   # writes out/index.html (runtime
   drawer** rendered from the genre's `EditorControlManifest` (data-driven), with a live game preview
   (deterministic codegen runs client-side → tuning is free/offline). "Generate" runs the full inner
   loop in-browser via the model Planner when an OpenRouter key is supplied.
+- **`mcp-server`** (Claude path): real stdio MCP server (`@modelcontextprotocol/sdk`) exposing
+  `list_templates` / `load_template` / `get_blueprint_schema` / `validate_blueprint` / `repair_blueprint`
+  / `build_game` / `generate_game`. Host-as-model design: on Claude/Cursor the host authors the
+  Blueprint and our tools handle schema/validate/repair/build (no key); `generate_game` is the
+  key-gated one-shot for other hosts. Handshake + `tools/list` verified over stdio.
 
 ### Not yet built (next)
 
 - On-device (WebGPU) provider for the free Tier-2 NL→toggle path.
-- `mcp-server` transport wiring (`@modelcontextprotocol/sdk`) + Smithery listing (Claude path).
 - Live validation of `openRouterProvider` against the real API (needs a key).
+- Smithery listing for the MCP server.

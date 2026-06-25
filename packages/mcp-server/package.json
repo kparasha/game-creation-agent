@@ -5,8 +5,14 @@
   "type": "module",
   "main": "src/index.ts",
   "types": "src/index.ts",
-  "dependencies": {
-    "@forge/core": "*"
+  "scripts": {
+    "start": "tsx src/index.ts"
   },
-  "//deps": "coding phase: add @modelcontextprotocol/sdk to wire transport"
+  "dependencies": {
+    "@forge/core": "*",
+    "@forge/genre-wave-survival": "*",
+    "@forge/adapter-web-canvas": "*",
+    "@forge/providers": "*",
+    "@modelcontextprotocol/sdk": "^1.12.0"
+  }
 }
