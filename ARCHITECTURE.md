@@ -66,10 +66,13 @@ npm run demo -- "a cozy garden survival game"   # writes out/index.html (runtime
   (`openRouterProvider` BYOM via HTTP, `mockProvider`, `createModelRouter`). Deterministic repairer real.
 - **Typed infra-error taxonomy** (`AgentError`): the loop fails *closed* — stage failures become a typed
   error on a `status:'failed'` result + an `error.raised` telemetry event, never an unhandled throw.
+- **`editor-web`** (Vite): the templates-first, two-mode editor. Template gallery + live-tuning **Design
+  drawer** rendered from the genre's `EditorControlManifest` (data-driven), with a live game preview
+  (deterministic codegen runs client-side → tuning is free/offline). "Generate" runs the full inner
+  loop in-browser via the model Planner when an OpenRouter key is supplied.
 
 ### Not yet built (next)
 
-- `editor-web` — the templates-first, two-mode editor that renders the `manifest`.
 - On-device (WebGPU) provider for the free Tier-2 NL→toggle path.
 - `mcp-server` transport wiring (`@modelcontextprotocol/sdk`) + Smithery listing (Claude path).
 - Live validation of `openRouterProvider` against the real API (needs a key).
