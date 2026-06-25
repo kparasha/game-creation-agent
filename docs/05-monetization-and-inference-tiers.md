@@ -4,7 +4,7 @@ _Last updated: 2026-06-21._
 
 ## The core insight (user's, sharpened)
 
-Most edits in a Dreams-style editor are **parameter tweaks on an existing template** — they don't
+Most edits in a direct-manipulation editor are **parameter tweaks on an existing template** — they don't
 need an LLM at all. If we route work by cost, we get **true Free-to-Play for play+tweak** and reserve
 paid server inference for the genuinely expensive act: **generating net-new templates**. This is the
 single biggest lever on unit economics (Sekai's #1 problem: "every generation costs money").
@@ -52,8 +52,8 @@ complementary (see `02`): MCP/plugin = developer wedge (host model); web/PWA = c
   (or runs on the user's own key via BYOM/OpenRouter). This is the pay-to-play action.
 
 > Nested drawers: each top-level mode opens a drawer, and a selection can open a **sub-drawer**
-> (Dreams' "Effects Mode" pattern). The **Editor Control Manifest is hierarchical** (group → tab →
-> control → sub-control) so we can deep-crawl Dreams' menu depth later without reworking the shell.
+> (a nested-mode menu pattern). The **Editor Control Manifest is hierarchical** (group → tab →
+> control → sub-control) so we can deepen the menu depth later without reworking the shell.
 > Keep it shallow for v1.
 
 ## Monetization model
@@ -75,7 +75,7 @@ complementary (see `02`): MCP/plugin = developer wedge (host model); web/PWA = c
 - **Costs scale with _creation_, not _consumption_**: 1 paid generation → unlimited free plays/tweaks/
   remixes. That's the opposite of Sekai's "every piece of content costs money."
 - **Privacy + latency**: on-device tweaks are instant and private (no round-trip), which makes the
-  iterate loop feel native — exactly where Dreams' direct-manipulation shines.
+  iterate loop feel native — exactly where direct-manipulation editing shines.
 
 ## Architecture hooks (see `03`)
 

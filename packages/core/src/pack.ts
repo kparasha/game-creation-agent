@@ -23,7 +23,7 @@ export interface Control {
   tier: InferenceTier;
 }
 
-/** Hierarchical groups → Dreams-style nested sub-drawers (kept shallow for v1). */
+/** Hierarchical groups → nested sub-drawers / collapsible sections (kept shallow for v1). */
 export interface ControlGroup {
   id: string;
   label: string;

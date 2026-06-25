@@ -9,7 +9,7 @@ horizontal-tooling like Lovable/Replit but vertical for games).
 - [`01-company-landscape.md`](01-company-landscape.md) — comps, world models, middleware, walled gardens; genre rationale.
 - [`02-distribution-api-matrix.md`](02-distribution-api-matrix.md) — distribution × programmatic matrix; the MCP "both at once" insight.
 - [`03-agent-architecture.md`](03-agent-architecture.md) — Planner/Executor/Judge inner loop + Karpathy AutoResearch outer loop; HITL; what's in the slice.
-- [`04-dreams-ux-learnings.md`](04-dreams-ux-learnings.md) — Dreams UI patterns (screenshots in `assets/dreams/`); templates-first two-mode editor.
+- UX reference notes (prior-art creation-tool patterns; templates-first two-mode editor) are kept **locally** in `docs/_local/` (gitignored).
 - [`05-monetization-and-inference-tiers.md`](05-monetization-and-inference-tiers.md) — 3 inference tiers, Design vs Create mode, prepaid+earn, BYOM, F2P unlock, on-device delivery (WebGPU vs native).
 - [`06-architecture-review.md`](06-architecture-review.md) — EM/architect review of the code scaffold: pattern, dep graph, SOLID checklist, risks, sign-off tick-list. See also [`../ARCHITECTURE.md`](../ARCHITECTURE.md).
 - [`07-telemetry-and-integration.md`](07-telemetry-and-integration.md) — MCP shim vs core service layering; telemetry (EventSink) as a now-decision; Phase 0 sequencing.
@@ -26,5 +26,5 @@ horizontal-tooling like Lovable/Replit but vertical for games).
 
 ## Open
 
-- GTM surface (gates control layout). Deep-crawl Dreams nested menus (deferred).
+- GTM surface (gates control layout). Deeper nested-menu crawl (deferred).
 - Verify `Moonscale AI` / `Moonlake AI` (named by user, not found — see 01).

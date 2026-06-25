@@ -4,7 +4,7 @@ import type { EditorControlManifest } from '@forge/core';
  * The Design-Mode drawer, declared as DATA. The editor shell renders this however the GTM surface
  * wants (web side-drawer, controller radial, touch sheet) — same manifest. Most controls are
  * 'client-deterministic' → editing them is free (no model call). That is the F2P unlock (docs/05).
- * Nested `groups` model Dreams' sub-drawers (e.g. Waves → Escalation). Kept shallow for v1.
+ * Nested `groups` model collapsible sub-drawers (e.g. Waves → Escalation). Kept shallow for v1.
  */
 export const manifest: EditorControlManifest = {
   groups: [
