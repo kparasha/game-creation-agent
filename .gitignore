@@ -6,3 +6,6 @@ dist/
 .env
 .env.*
 .claude/settings.local.json
+
+# local-only UX reference notes (gitignored — not for the repo, even private)
+docs/_local/

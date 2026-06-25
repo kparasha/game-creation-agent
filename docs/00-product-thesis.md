@@ -51,7 +51,7 @@ plus eval loops (harness, regression, failure taxonomy), model routing/benchmark
    **Target Adapters** (one per distribution/runtime surface). See `03-agent-architecture.md`.
 4. **UX = templates-first, two modes**: **Design Mode** (free tweak/remix) + **Create Mode** (paid
    generate-new). Controls declared as data in the Genre Pack so the same manifest renders per platform.
-   See `04-reference-ux-learnings.md`.
+   See the local UX reference (`docs/_local/`, gitignored).
 5. **Three inference tiers → true F2P**: client-deterministic (free) + on-device small LLM (free,
    NL→toggles) + server LLM (paid, generate net-new templates / BYOM via OpenRouter).
    See `05-monetization-and-inference-tiers.md`.
@@ -65,4 +65,4 @@ plus eval loops (harness, regression, failure taxonomy), model routing/benchmark
 
 - GTM surface (decides toggle/drawer vs controller layout) — intentionally not finalized.
 - `Moonscale AI` / `Moonlake AI` — named by user, not yet verified; flagged in landscape doc.
-- Deep-crawl of Reference' nested menus — deferred; shell already supports hierarchical Manifest.
+- Deeper nested-menu crawl — deferred; shell already supports the hierarchical Manifest.
