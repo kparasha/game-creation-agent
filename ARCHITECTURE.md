@@ -57,13 +57,19 @@ npm run demo -- "a cozy garden survival game"   # writes out/index.html (runtime
 
 ## Status: scaffold (pre-coding)
 
-Real LLM calls, the canvas game runtime, on-device tweak translation, the editor web app, and MCP
-transport are **deferred to the coding phase**. The CLI proves the loop wiring with stub stages +
-real deterministic validators + real (templated) HTML codegen.
+### Built (web path)
+
+- `adapter-web-canvas`: **real generic canvas runtime** — a playable wave-survival loop driven entirely
+  by the embedded Blueprint (`window.__SPEC__`): movement (WASD/pointer/touch), auto-fire, wave spawn +
+  escalation, collisions, upgrades, win/endless, HUD, restart. Headless boot test included.
+- **Real model-backed Planner** (`createModelPlanner`, genre-agnostic) + `@forge/providers`
+  (`openRouterProvider` BYOM via HTTP, `mockProvider`, `createModelRouter`). Deterministic repairer real.
+- **Typed infra-error taxonomy** (`AgentError`): the loop fails *closed* — stage failures become a typed
+  error on a `status:'failed'` result + an `error.raised` telemetry event, never an unhandled throw.
 
 ### Not yet built (next)
 
-- `adapter-web-canvas` generic runtime (the actual playable game loop reading the Blueprint).
-- Real `Planner`/`Repairer` (server + on-device providers; structured generation against `planning`).
 - `editor-web` — the templates-first, two-mode editor that renders the `manifest`.
-- `mcp-server` transport wiring (`@modelcontextprotocol/sdk`) + Smithery listing.
+- On-device (WebGPU) provider for the free Tier-2 NL→toggle path.
+- `mcp-server` transport wiring (`@modelcontextprotocol/sdk`) + Smithery listing (Claude path).
+- Live validation of `openRouterProvider` against the real API (needs a key).

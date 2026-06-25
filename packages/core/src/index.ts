@@ -7,6 +7,8 @@ export * from './adapter';
 export * from './model';
 export * from './pack';
 export * from './agent';
+export * from './errors';
+export * from './model-planner';
 export * from './orchestrator';
 export * from './trace';
 export * from './telemetry';
