@@ -1,0 +1,37 @@
+#!/bin/sh
+#
+# Local stand-in for branch protection (GitHub's free plan can't protect private repos).
+# Blocks two things so `main` only advances via merged PRs:
+#   1. direct pushes to main
+#   2. force-pushes / non-fast-forward updates to any branch
+#
+# Bypass for a one-off (e.g. an intentional history fix):  git push --no-verify
+#
+# Installed via `core.hooksPath=.githooks` (set by the package.json "prepare" script).
+
+protected="main"
+zero="0000000000000000000000000000000000000000"
+status=0
+
+while read -r local_ref local_sha remote_ref remote_sha; do
+  branch="${remote_ref#refs/heads/}"
+
+  # 1. No direct pushes to the protected branch.
+  if [ "$branch" = "$protected" ]; then
+    echo "pre-push: direct pushes to '$protected' are blocked — open a PR and merge on GitHub." >&2
+    echo "         (override a deliberate exception with: git push --no-verify)" >&2
+    status=1
+    continue
+  fi
+
+  # 2. No force-push / non-fast-forward on any branch.
+  if [ "$remote_sha" != "$zero" ] && [ "$local_sha" != "$zero" ]; then
+    if ! git merge-base --is-ancestor "$remote_sha" "$local_sha" 2>/dev/null; then
+      echo "pre-push: non-fast-forward (force) push to '$branch' is blocked." >&2
+      echo "         (override with: git push --no-verify)" >&2
+      status=1
+    fi
+  fi
+done
+
+exit "$status"
