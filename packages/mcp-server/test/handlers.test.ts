@@ -51,3 +51,11 @@ test('generate_game without a key throws a helpful error', async () => {
   await assert.rejects(() => handleTool('generate_game', { prompt: 'x' }), /OPENROUTER_API_KEY/);
   if (prev !== undefined) process.env.OPENROUTER_API_KEY = prev;
 });
+
+test('validate_blueprint reports a missing spec as a finding (does not throw)', async () => {
+  const malformed = { genre: 'wave-survival', schemaVersion: 1, meta: { title: 'x', createdWith: 'server' } };
+  const v = (await handleTool('validate_blueprint', { blueprint: malformed })) as {
+    findings: { code: string }[];
+  };
+  assert.ok(v.findings.some((f) => f.code === 'SCHEMA_NO_SPEC'));
+});

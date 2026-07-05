@@ -78,21 +78,20 @@ export const tools: ToolDef[] = [
   },
 ];
 
-function findingsFor(bp: BP): ValidationFinding[] {
-  return [
-    ...pack.validateBlueprint(bp),
-    ...pack.validators.flatMap((v) => v.check(bp) as ValidationFinding[]),
-  ];
+async function findingsFor(bp: BP): Promise<ValidationFinding[]> {
+  const schema = pack.validateBlueprint(bp);
+  // Gate: gameplay validators assume a well-formed spec, so skip them when the shape is invalid
+  // (also honors the Validator interface's async return — unlike a synchronous flatMap cast).
+  if (schema.some((x) => x.severity === 'error')) return schema;
+  const gameplay = (await Promise.all(pack.validators.map((v) => v.check(bp)))).flat();
+  return [...schema, ...gameplay];
 }
 
 const executor: Executor<Spec> = { build: (bp, adapter) => adapter.build(bp) };
 const judge: Judge<Spec> = {
-  async judge(bp, _build, p) {
-    const f = [
-      ...p.validateBlueprint(bp),
-      ...(await Promise.all(p.validators.map((v) => v.check(bp)))).flat(),
-    ];
-    return { passed: f.every((x) => x.severity !== 'error'), findings: f };
+  async judge(bp) {
+    const findings = await findingsFor(bp);
+    return { passed: findings.every((x) => x.severity !== 'error'), findings };
   },
 };
 
@@ -116,11 +115,11 @@ export async function handleTool(name: string, args: Record<string, unknown>): P
       };
 
     case 'validate_blueprint':
-      return { findings: findingsFor(args.blueprint as BP) };
+      return { findings: await findingsFor(args.blueprint as BP) };
 
     case 'repair_blueprint': {
       const bp = args.blueprint as BP;
-      const report: JudgeReport = { passed: false, findings: findingsFor(bp) };
+      const report: JudgeReport = { passed: false, findings: await findingsFor(bp) };
       return deterministicRepairer.repair(bp, report, pack, null as never);
     }
 
