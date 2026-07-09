@@ -75,9 +75,15 @@ npm run demo -- "a cozy garden survival game"   # writes out/index.html (runtime
   / `build_game` / `generate_game`. Host-as-model design: on Claude/Cursor the host authors the
   Blueprint and our tools handle schema/validate/repair/build (no key); `generate_game` is the
   key-gated one-shot for other hosts. Handshake + `tools/list` verified over stdio.
+- **OpenAI-compatible provider** (`openAICompatibleProvider`): one HTTP provider for any
+  OpenAI-shaped endpoint, with presets `openRouterProvider` / `zenmuxProvider` (free GLM tier) and a
+  self-hosted LiteLLM/Groq path. Structured output auto-falls back `json_schema → prompt` for models
+  that reject `response_format`, and responses are parsed leniently (fences/prose). `.mcp.json` at the
+  repo root registers the MCP server for one-step dogfooding in Claude Code / Cursor.
 
 ### Not yet built (next)
 
 - On-device (WebGPU) provider for the free Tier-2 NL→toggle path.
-- Live validation of `openRouterProvider` against the real API (needs a key).
+- A live run against a real free model (OpenRouter / Zenmux `glm-5.2-free`) — now unblocked; pending a key.
+- Second Genre Pack (proves the modularity claim).
 - Smithery listing for the MCP server.
