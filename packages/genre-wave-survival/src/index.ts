@@ -21,16 +21,30 @@ const failureTaxonomy: FailureTaxonomy = {
     label: 'No escalation',
     repairHint: 'Raise at least one waves.escalation multiplier above 1.0.',
   },
+  SCHEMA_NO_SPEC: {
+    label: 'Missing spec',
+    repairHint: 'Provide a spec object (player, enemies, waves, upgrades, win, theme).',
+  },
   UPG_EMPTY: { label: 'No upgrades', repairHint: 'Add 1–3 upgrades to the pool.' },
   BAL_TOO_HARD: { label: 'Too hard', repairHint: 'Lower enemy damage/count or raise player hp.' },
   BAL_TOO_EASY: { label: 'Too easy', repairHint: 'Raise enemy damage/count or escalation multipliers.' },
 };
 
-/** Lightweight shape check before the gameplay validators run. */
+/**
+ * Lightweight shape check before the gameplay validators run. Callers should treat a schema-level
+ * error as a gate: the gameplay validators assume a well-formed `spec` and would otherwise throw.
+ */
 function validateBlueprint(bp: WaveSurvivalBlueprint): ValidationFinding[] {
   const f: ValidationFinding[] = [];
   if (bp.genre !== 'wave-survival')
     f.push({ code: 'SCHEMA_GENRE', severity: 'error', message: "genre must be 'wave-survival'" });
+  const spec: unknown = (bp as { spec?: unknown }).spec;
+  if (spec === null || typeof spec !== 'object')
+    f.push({
+      code: 'SCHEMA_NO_SPEC',
+      severity: 'error',
+      message: 'blueprint.spec is missing or not an object',
+    });
   if (bp.schemaVersion !== SCHEMA_VERSION)
     f.push({ code: 'SCHEMA_VERSION', severity: 'warn', message: `expected schemaVersion ${SCHEMA_VERSION}` });
   return f;
