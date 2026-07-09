@@ -62,4 +62,9 @@ export interface GenrePack<TSpec = unknown> {
   /** Regression corpus for the AutoResearch outer loop. */
   regression: RegressionCase<TSpec>[];
   planning: PlanningSpec;
+  /**
+   * The genre's web-canvas runtime (a JS string). The adapter is genre-agnostic packaging; the
+   * runtime is genre knowledge, so it travels with the pack: `createWebCanvasAdapter(pack.webRuntime)`.
+   */
+  webRuntime?: string;
 }

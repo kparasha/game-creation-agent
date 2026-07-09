@@ -2,26 +2,25 @@ import type { TargetAdapter, BuildOutput, Blueprint } from '@forge/core';
 import { RUNTIME_JS } from './runtime';
 
 /**
- * Web-canvas Target Adapter → emits ONE self-contained HTML file.
- *
- * Key design point (docs/05): the Blueprint spec is embedded as `window.__SPEC__` and the GENERIC
- * wave-survival runtime (runtime.ts) reads it. So "generating a game" for an existing sub-genre is
- * just producing a Blueprint (deterministic, free) — NOT new code. New code is authored only when
- * extending the runtime to a new sub-genre. The same HTML5 build also feeds TikTok / Telegram /
- * Discord / Reddit via thin adapters that add each surface's SDK (docs/02).
+ * Web-canvas Target Adapter → emits ONE self-contained HTML file. It is GENRE-AGNOSTIC packaging: it
+ * embeds the Blueprint spec as `window.__SPEC__` and inlines whatever runtime it's given. The runtime
+ * is genre knowledge (a wave-survival loop, an idle-tycoon UI, …) that travels with the Genre Pack —
+ * so a new genre needs no adapter change: `createWebCanvasAdapter(pack.webRuntime)`.
  */
-export const webCanvasAdapter: TargetAdapter = {
-  surface: 'web-canvas',
-  async build(blueprint: Blueprint): Promise<BuildOutput> {
-    return {
-      surface: 'web-canvas',
-      files: { 'index.html': renderHtml(blueprint) },
-      entry: 'index.html',
-    };
-  },
-};
+export function createWebCanvasAdapter(runtime: string): TargetAdapter {
+  return {
+    surface: 'web-canvas',
+    async build(blueprint: Blueprint): Promise<BuildOutput> {
+      return {
+        surface: 'web-canvas',
+        files: { 'index.html': renderHtml(blueprint, runtime) },
+        entry: 'index.html',
+      };
+    },
+  };
+}
 
-function renderHtml(bp: Blueprint): string {
+function renderHtml(bp: Blueprint, runtime: string): string {
   // Escape `<` so a stray "</script>" inside spec data can't break out of the inline script.
   const specJson = JSON.stringify(bp.spec).replace(/</g, '\\u003c');
   return `<!doctype html>
@@ -38,7 +37,7 @@ function renderHtml(bp: Blueprint): string {
 <body>
 <canvas id="game"></canvas>
 <script>window.__SPEC__ = ${specJson};</script>
-<script>${RUNTIME_JS}</script>
+<script>${runtime}</script>
 </body>
 </html>`;
 }
@@ -49,6 +48,9 @@ function escapeHtml(s: string): string {
     (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c] as string,
   );
 }
+
+/** Default instance for the wave-survival runtime (kept for existing call sites). */
+export const webCanvasAdapter = createWebCanvasAdapter(RUNTIME_JS);
 
 export { RUNTIME_JS } from './runtime';
 export default webCanvasAdapter;
