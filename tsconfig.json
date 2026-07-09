@@ -15,6 +15,7 @@
     "paths": {
       "@forge/core": ["packages/core/src/index.ts"],
       "@forge/genre-wave-survival": ["packages/genre-wave-survival/src/index.ts"],
+      "@forge/genre-idle-tycoon": ["packages/genre-idle-tycoon/src/index.ts"],
       "@forge/adapter-web-canvas": ["packages/adapter-web-canvas/src/index.ts"],
       "@forge/providers": ["packages/providers/src/index.ts"]
     }
