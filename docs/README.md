@@ -5,7 +5,7 @@ horizontal-tooling like Lovable/Replit but vertical for games).
 
 ## Index
 
-- [`00-product-thesis.md`](00-product-thesis.md) — the bet, Sekai + Astrocade learnings, JD signal, locked decisions.
+- [`00-product-thesis.md`](00-product-thesis.md) — the bet, locked decisions.
 - [`01-company-landscape.md`](01-company-landscape.md) — comps, world models, middleware, walled gardens; genre rationale.
 - [`02-distribution-api-matrix.md`](02-distribution-api-matrix.md) — distribution × programmatic matrix; the MCP "both at once" insight.
 - [`03-agent-architecture.md`](03-agent-architecture.md) — Planner/Executor/Judge inner loop + Karpathy AutoResearch outer loop; HITL; what's in the slice.
@@ -27,4 +27,4 @@ horizontal-tooling like Lovable/Replit but vertical for games).
 ## Open
 
 - GTM surface (gates control layout). Deeper nested-menu crawl (deferred).
-- Verify `Moonscale AI` / `Moonlake AI` (named by user, not found — see 01).
+
